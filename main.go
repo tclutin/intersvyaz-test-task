@@ -2,43 +2,27 @@ package main
 
 import "fmt"
 
-func main() {
-	first := &ListNode{
-		Val: 9,
-		Next: &ListNode{
-			Val: 9,
-			Next: &ListNode{
-				Val: 9,
-				Next: &ListNode{
-					Val: 9,
-					Next: &ListNode{
-						Val: 9,
-						Next: &ListNode{
-							Val: 9,
-							Next: &ListNode{
-								Val:  9,
-								Next: nil,
-							},
-						},
-					},
-				},
-			},
-		},
-	}
+func TransformToList(values ...int) *ListNode {
+	var list *ListNode
+	var last *ListNode
 
-	second := &ListNode{
-		Val: 9,
-		Next: &ListNode{
-			Val: 9,
-			Next: &ListNode{
-				Val: 9,
-				Next: &ListNode{
-					Val:  9,
-					Next: nil,
-				},
-			},
-		},
+	for _, value := range values {
+		element := &ListNode{Val: value}
+		if list == nil {
+			list = element
+			last = element
+		} else {
+			last.Next = element
+			last = element
+		}
 	}
+	return list
+}
+
+func main() {
+	first := TransformToList(9, 9, 9, 9, 9, 9, 9)
+	second := TransformToList(9, 9, 9, 9)
+
 	list := addTwoNumbers(first, second)
 	for list != nil {
 		fmt.Println(list.Val)
