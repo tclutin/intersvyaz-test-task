@@ -2,11 +2,6 @@ package main
 
 import "fmt"
 
-type ListNode struct {
-	Val  int
-	Next *ListNode
-}
-
 func main() {
 	first := &ListNode{
 		Val: 9,
@@ -44,9 +39,9 @@ func main() {
 			},
 		},
 	}
-	x := addTwoNumbersFirstVersion(first, second)
-	for x != nil {
-		fmt.Println(x.Val)
-		x = x.Next
+	list := addTwoNumbers(first, second)
+	for list != nil {
+		fmt.Println(list.Val)
+		list = list.Next
 	}
 }

@@ -1,5 +1,10 @@
 package main
 
+type ListNode struct {
+	Val  int
+	Next *ListNode
+}
+
 func AddToEndList(list *ListNode, element *ListNode) *ListNode {
 	if list == nil {
 		list = element
@@ -13,8 +18,7 @@ func AddToEndList(list *ListNode, element *ListNode) *ListNode {
 	return list
 }
 
-// O(n^2)
-func addTwoNumbersFirstVersion(l1 *ListNode, l2 *ListNode) *ListNode {
+func addTwoNumbersSlow(l1 *ListNode, l2 *ListNode) *ListNode {
 	var sum, digit int
 	var result, element *ListNode
 
@@ -59,11 +63,12 @@ func addTwoNumbersFirstVersion(l1 *ListNode, l2 *ListNode) *ListNode {
 	return result
 }
 
-// TODO: fix AddToEndList -> O(n) //TODO: FIX bad view
-func addTwoNumbersSecondVersion(l1 *ListNode, l2 *ListNode) *ListNode {
+func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
 	var sum, digit int
-	var result, element *ListNode
-	//var result1, last *ListNode
+	var element *ListNode
+
+	var last = &ListNode{}
+	var result = last
 
 	for l1 != nil || l2 != nil {
 		if l1 != nil {
@@ -76,7 +81,7 @@ func addTwoNumbersSecondVersion(l1 *ListNode, l2 *ListNode) *ListNode {
 			l2 = l2.Next
 		}
 
-		sum += digit % 10
+		sum += digit
 
 		if sum >= 10 {
 			digit = 1
@@ -84,14 +89,17 @@ func addTwoNumbersSecondVersion(l1 *ListNode, l2 *ListNode) *ListNode {
 				Val:  sum % 10,
 				Next: nil,
 			}
-			result = AddToEndList(result, element)
+			last.Next = element
+			last = element
+
 		} else {
 			digit = 0
 			element = &ListNode{
 				Val:  sum,
 				Next: nil,
 			}
-			result = AddToEndList(result, element)
+			last.Next = element
+			last = element
 		}
 		sum = 0
 	}
@@ -101,7 +109,8 @@ func addTwoNumbersSecondVersion(l1 *ListNode, l2 *ListNode) *ListNode {
 			Val:  1,
 			Next: nil,
 		}
-		result = AddToEndList(result, element)
+		last.Next = element
+		last = element
 	}
-	return result
+	return result.Next
 }
